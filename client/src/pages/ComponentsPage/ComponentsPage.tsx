@@ -8,7 +8,7 @@ const ComponentsPage = () => {
     return(
         <div className="flex flex-col justify-evenly items-center bg-slate-400 p-4">
             <div className="max-w-80">
-                <TextInput placeholder="This is the text input" />
+                <TextInput type="text" placeholder="This is the text input" />
                 <br />
                 <SelectBox 
                     selectBoxLabel="Select Something"

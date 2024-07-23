@@ -2,12 +2,13 @@ import { Button } from "@nextui-org/react"
 
 interface ButtonOneProps {
     buttonLabel: string,
-    isFilled: boolean
+    isFilled: boolean,
+    onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const ButtonOne: React.FC<ButtonOneProps> = ({buttonLabel, isFilled}) => {
+const ButtonOne: React.FC<ButtonOneProps> = ({buttonLabel, isFilled, onClick}) => {
     return(
-        <Button color="secondary" variant={isFilled? 'solid': 'bordered'} radius="sm" className="font-semibold text-xs">
+        <Button onClick={onClick} color="secondary" variant={isFilled? 'solid': 'bordered'} radius="sm" className="font-semibold text-xs">
             {buttonLabel}
         </Button>
     )
