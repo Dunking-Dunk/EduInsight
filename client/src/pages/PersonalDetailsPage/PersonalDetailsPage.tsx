@@ -7,6 +7,7 @@ import TextInput from "../../components/TextInput/TextInput";
 import ButtonOne from "../../components/ButtonOne/ButtonOne";
 import { updateUserDetails } from "../../firebase/firestore";
 import SelectBox from "../../components/SelectBox/SelectBox";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 interface PersonalDetails {
     name: string;
@@ -95,6 +96,9 @@ const PersonalDetailsPage = () => {
         { value: "mct", text: "MECHATRONICS" },
         { value: "ra", text: "ROBOTICS AND AUTOMATION" }
     ];
+
+    if(loading)
+        return <LoadingPage />
 
     return(
         <div className="personal-detial-page-container flex flex-col justify-center items-center min-h-[100vh] p-4">

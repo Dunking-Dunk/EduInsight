@@ -1,15 +1,21 @@
-import { Select, SelectItem } from "@nextui-org/react"
+import { Select, SelectItem, SharedSelection } from "@nextui-org/react"
+
+interface boxItem {
+    value: string,
+    text: string
+}
 
 interface ButtonSelectBoxProps {
     label: string,
-    items: string[]
+    items: boxItem[],
+    onSelectionChanged: (value: SharedSelection) => void
 }
 
-const ButtonSelectBox: React.FC<ButtonSelectBoxProps> = ({label, items}) => {
+const ButtonSelectBox: React.FC<ButtonSelectBoxProps> = ({label, items, onSelectionChanged}) => {
     return(
-        <Select label={label} variant="flat" color="primary">
+        <Select className="mx-1" label={label} variant="flat" color="primary" onSelectionChange={onSelectionChanged}>
             {
-                items.map((value, index) => <SelectItem key={index}>{value}</SelectItem>)
+                items.map((item, index) => <SelectItem key={item.value}>{item.text}</SelectItem>)
             }
         </Select>
     )

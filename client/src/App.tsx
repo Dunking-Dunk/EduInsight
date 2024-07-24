@@ -1,17 +1,29 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
 import './App.css'
-import ComponentsPage from './pages/ComponentsPage/ComponentsPage'
-import LoadingPage from './pages/LoadingPage/LoadingPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import PersonalDetailsPage from './pages/PersonalDetailsPage/PersonalDetailsPage'
 import CutoffPage from './pages/CutoffPage/CutoffPage'
 import HomePage from './pages/HomePage/HomePage'
 import CollegeDetailPage from './pages/CollegeDetailPage/CollegeDetailPage'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import Sidebar from './components/Sidebar/Sidebar'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from './firebase/firebase'
+import LoadingPage from './pages/LoadingPage/LoadingPage'
 
 function App() {
+  const [hideSidebar, setHideSidebar] = useState(true);
+  const [user, loading, error] = useAuthState(auth);
 
-  const routes = createBrowserRouter([
+  useEffect(() => {
+    if (user) {
+      setHideSidebar(false);
+    } else {
+      setHideSidebar(true);
+    }
+  }, [user]);
+
+  const routes = [
     {
       path: '/login',
       element: <LoginPage />
@@ -36,13 +48,28 @@ function App() {
       path: '/college-detail',
       element: <CollegeDetailPage />
     }
-  ])
+  ]
+
+  if(loading)
+    return <LoadingPage />
 
   return (
     <>
-      <Suspense fallback={<LoadingPage />}>
-        <RouterProvider router={routes} />
-      </Suspense>
+      <div className={`outer-container ${!hideSidebar ? 'grid grid-cols-[300px_1fr]' : 'grid grid-cols-[1fr]'}`}>
+        {!hideSidebar && <div className="side-bar-container">
+          <Sidebar />
+        </div>}
+        <div className="main-content-container">
+          {/* <Suspense fallback={<LoadingPage />}>
+            <RouterProvider router={routes} />
+          </Suspense> */}
+          <Routes>
+            {
+              routes.map(route => <Route element={route.element} path={route.path} />)
+            }
+          </Routes>
+        </div>
+      </div>
     </>
   )
 }
