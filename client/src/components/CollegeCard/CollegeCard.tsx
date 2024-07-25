@@ -1,4 +1,8 @@
 import { Button, Card } from "@nextui-org/react"
+import { useState } from "react"
+
+import './CollegeCard.css'
+import { useNavigate } from "react-router-dom";
 
 interface CollegeCardProps {
     collegeRank: number,
@@ -11,8 +15,19 @@ interface CollegeCardProps {
 }
 
 const CollegeCard: React.FC<CollegeCardProps> = ({collegeRank, collegeName, collegeLocation, collegeDept, collegeCommunity, collegeMaxCutoff, collegeMinCutoff}) => {
+    const [isSaved, setIsSaved] = useState(false);
+    const navigate = useNavigate()
+
+    const onSaveButtonClicked:React.MouseEventHandler<HTMLButtonElement> = () => {
+        setIsSaved(prev => !prev); 
+    }
+
+    const onCollegeCardClicked = () => {
+        navigate('/college-detail')
+    }
+
     return(
-        <Card className="flex flex-row justify-evenly items-center text-sm w-[90%] p-2">
+        <Card onPress={onCollegeCardClicked} isPressable className="ring-0 college-card flex flex-row justify-evenly items-center text-sm w-[90%] p-2 shadow hover:shadow-xl hover:cursor-pointer">
             <div className="rank-container bg-[#BEBEBE] text-center font-bold p-3 rounded-[15px] text-xs">
                 <p>RANK</p>
                 <p>{collegeRank}</p>
@@ -43,19 +58,19 @@ const CollegeCard: React.FC<CollegeCardProps> = ({collegeRank, collegeName, coll
                 </span>
             </div>
             <div className="college-card-button-container">
-                <Button isIconOnly variant="light">
-                    <svg width="14" height="21" viewBox="0 0 14 21" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 10C6.33696 10 5.70107 9.73661 5.23223 9.26777C4.76339 8.79893 4.5 8.16304 4.5 7.5C4.5 6.83696 4.76339 6.20107 5.23223 5.73223C5.70107 5.26339 6.33696 5 7 5C7.66304 5 8.29893 5.26339 8.76777 5.73223C9.23661 6.20107 9.5 6.83696 9.5 7.5C9.5 7.8283 9.43534 8.15339 9.3097 8.45671C9.18406 8.76002 8.99991 9.03562 8.76777 9.26777C8.53562 9.49991 8.26002 9.68406 7.95671 9.8097C7.65339 9.93534 7.3283 10 7 10ZM7 0.5C5.14348 0.5 3.36301 1.2375 2.05025 2.55025C0.737498 3.86301 0 5.64348 0 7.5C0 12.75 7 20.5 7 20.5C7 20.5 14 12.75 14 7.5C14 5.64348 13.2625 3.86301 11.9497 2.55025C10.637 1.2375 8.85652 0.5 7 0.5Z" fill="#222222"/>
+                <Button isIconOnly variant="light" color="success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-map-pin">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                        <circle cx="12" cy="10" r="3" fill="#fff" stroke="#fff"/>
                     </svg>
                 </Button>
-                <Button isIconOnly variant="light">
-                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 21.5V5.5C5 4.95 5.196 4.47933 5.588 4.088C5.98 3.69667 6.45067 3.50067 7 3.5H17C17.55 3.5 18.021 3.696 18.413 4.088C18.805 4.48 19.0007 4.95067 19 5.5V21.5L12 18.5L5 21.5Z" fill="#222222"/>
+                <Button isIconOnly variant="light" className={`${isSaved? 'text-red-500': ''}`} onClick={onSaveButtonClicked}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-bookmark">
+                        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
                     </svg>
                 </Button>
-                <Button isIconOnly variant="light">
-                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 12.5L14 5.5V9.5C7 10.5 4 15.5 3 20.5C5.5 17 9 15.4 14 15.4V19.5L21 12.5Z" fill="#222222"/>
+                <Button isIconOnly variant="light" color="secondary" className="text-secondary-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
                     </svg>
                 </Button>
             </div>

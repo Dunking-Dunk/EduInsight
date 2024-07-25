@@ -1,4 +1,4 @@
-import { Card } from "@nextui-org/react";
+import { Card, Spacer } from "@nextui-org/react";
 import TextInput from "../../components/TextInput/TextInput";
 import { useState } from "react";
 import ButtonOne from "../../components/ButtonOne/ButtonOne";
@@ -24,7 +24,7 @@ const CutoffPage = () => {
 
     return(
         <div className="cutoff-page-container min-h-[100vh] flex justify-center items-center">
-            <Card className="h-[300px] w-[300px] p-4 flex flex-col justify-evenly items-center">
+            <Card className="h-[350px] w-[300px] p-4 flex flex-col justify-evenly items-center">
                 <TextInput 
                     name="phy"
                     placeholder="Physics"
@@ -46,12 +46,13 @@ const CutoffPage = () => {
                     type="number"
                     isError={false}
                 />
-
+                <Spacer />
                 <ButtonOne
                     buttonLabel="Calculate Cutoff"
                     isFilled
                     onClick={() => setMarkDetails(d => {return {...d, cutoff: markDetails.chem/2 + markDetails.phy/2 + markDetails.math}})}
                 />
+                <Spacer />
                 <p className="w-[90%] bg-success-100 p-2 rounded-xl text-success-900">
                     Cutoff: {markDetails.cutoff}
                 </p>
